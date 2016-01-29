@@ -64,6 +64,15 @@ class ReminderDeck:
         reminder_weight: An integer weight that specifies how many spots in 
         the underlying probability distribution the reminder takes up."""
         self._reminders[reminder_string] = reminder_weight
+        return True
+
+    def remove(self, reminder_string):
+        """Remove a reminder from the deck.
+
+        reminder_string: The unique string comprising the reminder proper which
+        is used as the key to remove the reminder."""
+        self._reminders.pop(reminder_string)
+        return True
 
     def all(self):
         """Return all the entries in the reminder dictionary."""
