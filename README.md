@@ -1,3 +1,21 @@
+# Introduction #
+
+Most to-do lists, project-lists and the like are *sequential*. You're expected to
+read them linearly every time. Of course, we don't do this. We scan them, we skim,
+and every other technique humans use to kinda read something when their eyes glaze
+over. The longer a to-do list or project list gets, the more likely we are to just
+give up on it entirely. The basic problem is that our attention and patience are
+finite and we let these lists grow so large that it's unreasonable to expect
+ourselves to actually read them wholesale.
+
+Enter expected value. For something like a project list especially, we can imagine
+an *expected value* of reading the list for a given number of items. On a fifty
+item list one in every five ideas might be good enough to be worth reading again.
+The problem with trying to read the list at random is that you have to ignore all
+the other items on the list as visual noise. Epiphanal solves this problem by
+letting you define a probability distribution over all the items in the list
+and then grabbing a subsection from this distribution to read.
+
 # How To Install #
 
 Right now the program uses no external dependencies, but it does require python 3.x,
