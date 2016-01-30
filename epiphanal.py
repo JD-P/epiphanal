@@ -19,9 +19,15 @@ class ReminderDeck:
         if filepath:
             deck_file = open(filepath)
             self._reminders = json.load(deck_file)
+            self._filepath = filepath
         else:
-            self._reminders = {}
-                
+            self._reminders = []
+
+    def save(self):
+        output_file = open(self._filepath, "w")
+        json.dump(self._reminders, output_file)
+        return True
+            
     def draw(self, quantity):
         """Draw a number of reminders <quantity> from the deck. Each draw is 
         guarunteed to produce a unique object. If you call draw with a quantity
@@ -37,8 +43,8 @@ class ReminderDeck:
         weight_distribution = 0
         reminder_list = []
         for reminder in self._reminders:
-            weight_distribution += self._reminders[reminder]
-            reminder_list.append((reminder, self._reminders[reminder]))
+            weight_distribution += reminder[1]
+            reminder_list.append(reminder)
         index_distribution = len(reminder_list)
         output = []
         for i in range(quantity):
@@ -65,23 +71,20 @@ class ReminderDeck:
         reminder_string: The string of text that is the reminder proper.
         reminder_weight: An integer weight that specifies how many spots in 
         the underlying probability distribution the reminder takes up."""
-        self._reminders[reminder_string] = reminder_weight
+        self._reminders.append((reminder_string, reminder_weight))
         return True
 
-    def remove(self, reminder_string):
+    def remove(self, index):
         """Remove a reminder from the deck.
 
         reminder_string: The unique string comprising the reminder proper which
         is used as the key to remove the reminder."""
-        self._reminders.pop(reminder_string)
+        self._reminders.pop(index)
         return True
 
     def all(self):
         """Return all the entries in the reminder dictionary."""
-        output = []
-        for reminder in self._reminders:
-            output.append((reminder, self._reminders[reminder]))
-        return output
+        return self._reminders
     
     class OverDrawError(Exception):
         """Error raised when more items are requested from a method which pulls
