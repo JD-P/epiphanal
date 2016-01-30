@@ -19,6 +19,10 @@ class EpiphanalLineInterface(cmd.Cmd):
         load my_list
 
         load my-list"""
+        if not arg:
+            print("Load requires a deck name as an argument. See 'help load' for"
+                  " more details.")
+            return False
         filename = arg + ".json"
         home = os.path.expanduser("~")
         filepath = os.path.join(home, ".epiphanal", filename)
@@ -42,6 +46,10 @@ class EpiphanalLineInterface(cmd.Cmd):
         Example:
 
         new projects - Create a reminder deck with the name 'projects'."""
+        if not arg:
+            print("New requires a deck name as an argument. See 'help new' for "
+                  "more details.")
+            return False
         alphanumeric_dash_underscore = ("abcdefghijklmnopqrstuvwxyz"
                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                         "-_")
