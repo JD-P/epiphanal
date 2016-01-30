@@ -55,7 +55,7 @@ class EpiphanalLineInterface(cmd.Cmd):
         try:
             new_file = open(filepath, "w")
         except FileNotFoundError:
-            os.makedirs(os.path.split(filepath)[1])
+            os.makedirs(os.path.split(filepath)[0])
             new_file = open(filepath, "w")
         json.dump([], new_file)
         new_file.close()
@@ -74,12 +74,24 @@ class EpiphanalLineInterface(cmd.Cmd):
         
         Asking for more items than exist in the deck returns all items."""
         if arg == 'all':
-            items = self.deck.all()
+            try:
+                items = self.deck.all()
+            except AttributeError:
+                print("No reminder deck loaded. See 'help load' or 'help new' to load",
+                      "an existing deck or create a new one.")
         else:
             try:
-                items = self.deck.draw(int(arg))
+                try:
+                    items = self.deck.draw(int(arg))
+                except AttributeError:
+                    print("No reminder deck loaded. See 'help load' or 'help new' to load",
+                          "an existing deck or create a new one.")
             except ReminderDeck.OverDrawError:
-                items = self.deck.all()
+                try:
+                    items = self.deck.all()
+                except AttributeError:
+                    print("No reminder deck loaded. See 'help load' or 'help new' to load",
+                          "an existing deck or create a new one.")
         for item in enumerate(items):
             print(item[0], item[1][0], item[1][1], sep=" | ")
         
@@ -98,6 +110,9 @@ class EpiphanalLineInterface(cmd.Cmd):
         except AttributeError:
             print("No reminder deck loaded. See 'help load' or 'help new' to load",
                   "an existing deck or create a new one.")
+        except IndexError:
+            print("Improper command. Valid commands are a reminder string seperated",
+                  "by an integer weight. See 'help add' for more details.")
             
     def do_remove(self, arg):
         """Remove an item from the reminder deck by its index.
