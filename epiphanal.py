@@ -34,10 +34,10 @@ class ReminderDeck:
         The entire set is returned as a list sorted in nonincreasing order."""
         if quantity > len(self._reminders):
             raise self.OverDrawError
-        distribution = 0
+        weight_distribution = 0
         reminder_list = []
         for reminder in self._reminders:
-            distribution += self._reminders[reminder]
+            weight_distribution += self._reminders[reminder]
             reminder_list.append((reminder, self._reminders[reminder]))
         index_distribution = len(reminder_list)
         output = []
@@ -47,11 +47,13 @@ class ReminderDeck:
                 for weight in reminder_list:
                     index = random.randrange(index_distribution)
                     reminder = reminder_list[index]
-                    die = WeightedDie(reminder[1], distribution)
+                    die = WeightedDie(reminder[1], weight_distribution)
                     roll = die.roll()
                     if roll:
-                        output.append(reminder_list.pop(index))
+                        outcome = reminder_list.pop(index)
+                        output.append(outcome)
                         index_distribution -= 1
+                        weight_distribution -= outcome[1]
                         break
                     else:
                         continue
@@ -76,7 +78,10 @@ class ReminderDeck:
 
     def all(self):
         """Return all the entries in the reminder dictionary."""
-        return self._reminders
+        output = []
+        for reminder in self._reminders:
+            output.append((reminder, self._reminders[reminder]))
+        return output
     
     class OverDrawError(Exception):
         """Error raised when more items are requested from a method which pulls
