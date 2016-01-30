@@ -90,8 +90,8 @@ class EpiphanalLineInterface(cmd.Cmd):
                     return False
                 except ValueError:
                     print("The argument to show should be an integer quantity of"
-                          "reminders to pull from the deck. See 'help show' for"
-                          "more details.")
+                          " reminders to pull from the deck. See 'help show' for"
+                          " more details.")
                     return False
             except ReminderDeck.OverDrawError:
                 try:
