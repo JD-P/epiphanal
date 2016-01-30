@@ -29,7 +29,7 @@ class TestReminderDeck(unittest.TestCase):
     def test_remove(self):
         deck = ReminderDeck()
         deck.insert("A", 10)
-        deck.remove("A")
+        deck.remove(0)
         self.assertFalse(deck.all())
 
     def test_all(self):
