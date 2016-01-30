@@ -1,5 +1,12 @@
 from epiphanal import *
 import unittest
+import cProfile
+import random
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--speed", action='store_true')
+arguments = parser.parse_args()
 
 class TestReminderDeck(unittest.TestCase):
     def test_draw(self):
@@ -25,5 +32,22 @@ class TestReminderDeck(unittest.TestCase):
         deck.remove("A")
         self.assertFalse(deck.all())
 
+    def test_all(self):
+        deck = ReminderDeck()
+        deck.insert("A", 10)
+        deck.insert("B", 10)
+        a = deck.all()
+        a.sort()
+        self.assertTrue(a == [("A", 10), ("B", 10)])
+
+class TestReminderDeckSpeed(unittest.TestCase):
+    def test_speed(self):
+        deck = ReminderDeck()
+        for i in range(10000):
+            chars = (chr(random.randrange(128)) + chr(random.randrange(128)) +
+                     chr(random.randrange(128)) + chr(random.randrange(128)))
+            deck.insert(chars, random.randrange(10000))
+        cProfile.runctx('deck.draw(100)', globals(), locals())
+                
 if __name__ == '__main__':
     unittest.main()
