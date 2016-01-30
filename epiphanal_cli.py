@@ -79,6 +79,7 @@ class EpiphanalLineInterface(cmd.Cmd):
             except AttributeError:
                 print("No reminder deck loaded. See 'help load' or 'help new' to load",
                       "an existing deck or create a new one.")
+                return False
         else:
             try:
                 try:
@@ -86,12 +87,14 @@ class EpiphanalLineInterface(cmd.Cmd):
                 except AttributeError:
                     print("No reminder deck loaded. See 'help load' or 'help new' to load",
                           "an existing deck or create a new one.")
+                    return False
             except ReminderDeck.OverDrawError:
                 try:
                     items = self.deck.all()
                 except AttributeError:
                     print("No reminder deck loaded. See 'help load' or 'help new' to load",
                           "an existing deck or create a new one.")
+                    return False
         for item in enumerate(items):
             print(item[0], item[1][0], item[1][1], sep=" | ")
         
