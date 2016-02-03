@@ -29,41 +29,52 @@ creating a new reminder deck is to:
 
 Create a new list with the name of your choosing:
 
-new test - Create a new reminder deck with the name 'test'.
+    <epiphanal> new test - Create a new reminder deck with the name 'test'.
 
 Add a couple of reminders:
 
-add Test | 1 - Create a new reminder test with a weight of one. See explanation of
-               weight below.
+    <epiphanal> add Test | 1 - Create a new reminder test with a weight of one. See explanation of
+                               weight below.
 
-add Test2 | 1 - Same as above but with different name.
+    <epiphanal> add Test2 | 1 - Same as above but with different name.
 
 Pluck one from the deck to test:
 
-show 1 - Draw a reminder from the list by weight. If you draw multiple reminders
-         from the deck there will be no repeats. Therefore you can only draw as
-	 many items as exist in the deck.
+    <epiphanal> show 1 - Draw a reminder from the list by weight. If you draw multiple reminders
+                from the deck there will be no repeats. Therefore you can only draw as
+	        many items as exist in the deck.
+
+Or use 'show all' to see everything:
+
+    <epiphanal> show all - Show every item in the reminder deck.
 
 Save your deck to disk:
 
-save - Save the deck to a file in the .epiphanal folder in your home directory.
+    <epiphanal> save - Save the deck to a file in the .epiphanal folder in your home directory.
 
 Then exit the program:
 
-exit - Leave epiphanal.
+    <epiphanal> exit - Leave epiphanal.
 
 When you want to see the reminders later you start up the program and load the
 deck:
 
-load test - Load a preexisting deck with a given name.
+    <epiphanal> load test - Load a preexisting deck with a given name.
 
 And use show to draw a reminder from it:
 
-show 1 - See previously.
+    <epiphanal> show 1 - See previously.
 
 Then exit again:
 
-exit
+    <epiphanal> exit
+
+It's important to keep in mind that any changes to the deck will have to be saved
+with the 'save' command:
+
+    <epiphanal> add Test3 | 1
+
+    <epiphanal> save
 
 # Weight #
 
