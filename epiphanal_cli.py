@@ -1,6 +1,5 @@
 from epiphanal import *
 import os
-import curses
 import cmd
 
 class EpiphanalLineInterface(cmd.Cmd):
