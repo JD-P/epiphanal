@@ -38,6 +38,14 @@ class EpiphanalLineInterface(cmd.Cmd):
         except AttributeError:
             print("No reminder deck loaded. See 'help load' or 'help new' to load",
                   "an existing deck or create a new one.")
+
+    def do_list(self, arg):
+        """List the reminder decks that are stored in the system. Takes no 
+        arguments.
+
+        Example: list"""
+        for deck in os.listdir(os.path.join(os.path.expanduser("~"), ".epiphanal")):
+            print(deck[:-5])
             
     def do_new(self, arg):
         """Create a new reminder deck with the name given by argument.
