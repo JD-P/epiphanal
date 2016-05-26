@@ -42,17 +42,19 @@ class ReminderDeck:
             raise self.OverDrawError
         reminders = self._reminders[:]
         reminders.sort(key=(lambda t: t[1]))
-        weights = [reminder[1] for reminder in reminders]
+        weights = [(reminder[1][1],reminder[0]) for reminder in enumerate(reminders)]
         choices = set()
         for item in range(quantity):
-            choice = random.randrange(sum(weights))
-            weight_steps = [index[1] + sum(weights[:index[0]]) 
+            choice = random.randrange(sum([weight[0] for weight in weights]))
+            weight_steps = [(index[1][0] + 
+                            sum([weight[0] for weight in weights[:index[0]]]),
+                             index[1][1])
                             for index in enumerate(weights)]
             for step in enumerate(weight_steps):
-                if choice > step[1]:
+                if choice > step[1][0]:
                     continue
                 else:
-                    choices.add(step[0])
+                    choices.add(step[1][1])
                     del(weights[step[0]])
                     break
         return [reminders[choice] for choice in choices]
