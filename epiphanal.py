@@ -27,7 +27,7 @@ class ReminderDeck:
         output_file = open(self._filepath, "w")
         json.dump(self._reminders, output_file)
         return True
-            
+
     def draw(self, quantity):
         """Draw a number of reminders <quantity> from the deck. Each draw is 
         guarunteed to produce a unique object. If you call draw with a quantity
@@ -37,33 +37,25 @@ class ReminderDeck:
 
         (<STRING>, <INTEGER WEIGHT>)
 
-        The entire set is returned as a list sorted in nonincreasing order."""
+        The entire set is returned as a list sorted in increasing order."""
         if quantity > len(self._reminders):
             raise self.OverDrawError
-        weight_distribution = 0
-        reminder_list = []
-        for reminder in self._reminders:
-            weight_distribution += reminder[1]
-            reminder_list.append(reminder)
-        index_distribution = len(reminder_list)
-        output = []
-        for i in range(quantity):
-            signal = len(output)
-            while signal == len(output):
-                for weight in reminder_list:
-                    index = random.randrange(index_distribution)
-                    reminder = reminder_list[index]
-                    die = WeightedDie(reminder[1], weight_distribution)
-                    roll = die.roll()
-                    if roll:
-                        outcome = reminder_list.pop(index)
-                        output.append(outcome)
-                        index_distribution -= 1
-                        weight_distribution -= outcome[1]
-                        break
-                    else:
-                        continue
-        return output
+        reminders = self._reminders[:]
+        reminders.sort(key=(lambda t: t[1]))
+        weights = [reminder[1] for reminder in reminders]
+        choices = set()
+        for item in range(quantity):
+            choice = random.randrange(sum(weights))
+            weight_steps = [index[1] + sum(weights[:index[0]]) 
+                            for index in enumerate(weights)]
+            for step in enumerate(weight_steps):
+                if choice > step[1]:
+                    continue
+                else:
+                    choices.add(step[0])
+                    del(weights[step[0]])
+                    break
+        return [reminders[choice] for choice in choices]
 
     def insert(self, reminder_string, reminder_weight):
         """Insert a reminder into the deck.
